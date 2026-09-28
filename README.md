@@ -142,7 +142,7 @@ Core:
 **Không có code bypass CAPTCHA, Cloudflare, login hoặc robots Disallow.**
 
 
-## Active 5-site group (V2)
+## Active 5-site group
 
 1. MobiFone 5G FAQ — Customer Support
 2. MoMo Help Center — Customer Support
@@ -150,10 +150,7 @@ Core:
 4. UEL Admissions FAQ — Education
 5. HCMUS Admissions & FAQ — Education
 
-`vinaphone_5g_faq` và `vnuhcm_admissions` được giữ disabled để audit vì
-live test của nhóm bị robots preflight skip và thu được 0 page.
-
-Core V2 cũng:
+Core bản hiện tại:
 - follow robots.txt redirects an toàn trong allowed domains;
 - reject self-link trước khi đưa lại vào BFS;
 - hỗ trợ `required_any_keywords` / `reject_any_keywords` để quality gate chặt hơn.
