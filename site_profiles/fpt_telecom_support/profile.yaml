@@ -1,7 +1,7 @@
 id: fpt_telecom_support
-name: FPT Telecom Technical Support Articles
-topic: Vietnamese Customer Support
-domain_label: customer_support
+name: FPT Telecom Technical Support
+topic: Customer Support - Internet and Telecommunications
+
 enabled: true
 
 seed_urls:
@@ -9,108 +9,151 @@ seed_urls:
 
 allowed_domains:
   - fpt.vn
-  - www.fpt.vn
-
-user_agent: "VIRERetrievalCrawler/1.0 (academic research; respectful crawling)"
 
 crawl:
   max_depth: 2
-  max_pages: 500
-  max_requests: 1200
+  max_pages: 50
+  max_requests: 200
   request_timeout: 20
 
 rate_limit:
   initial_delay: 2.0
   min_delay: 2.0
   max_delay: 120.0
-  max_retries: 5
-  retry_statuses: [429, 503]
-  success_window: 8
-  recovery_factor: 0.85
+  max_retries: 4
+  retry_statuses:
+    - 429
+    - 503
+
+http:
+  follow_redirects: false
+  headers:
+    User-Agent: "VIRE-WebCorpus-Crawler/1.0"
 
 policy:
   robots: respect
   robots_unavailable: block
-  stop_host_statuses: [401, 403]
-  challenge_patterns:
-    - "just a moment"
-    - "access denied"
-    - "verify you are human"
-    - "captcha"
-    - "cf-chl-"
+  stop_host_statuses:
+    - 401
+    - 403
 
 url:
-  trailing_slash: preserve
   allow_path_regex:
-    - '^/tin-tuc/vien-thong-cong-nghe/?$'
-    - '^/tin-tuc/[^/]+\.html$'
+    - "^/tin-tuc/vien-thong-cong-nghe/?$"
+    - "^/tin-tuc/[^?#]+\\.html$"
+
   deny_path_regex:
-    - '^/tin-tuc/(?:the-thao|giai-tri|game|doi-song|tags)(?:/|$)'
-  strip_query_prefixes: [utm_]
-  strip_query_keys: [ref]
+    - "/tuyen-dung"
+    - "/viec-lam"
+    - "/lien-he"
+    - "/gioi-thieu"
+
+  ignored_extensions:
+    - ".jpg"
+    - ".jpeg"
+    - ".png"
+    - ".gif"
+    - ".svg"
+    - ".webp"
+    - ".ico"
+    - ".css"
+    - ".js"
+    - ".pdf"
+    - ".zip"
+    - ".rar"
+    - ".7z"
+    - ".gz"
+    - ".mp3"
+    - ".mp4"
+    - ".avi"
+    - ".mov"
+    - ".webm"
+    - ".ogg"
+    - ".wav"
+    - ".woff"
+    - ".woff2"
+    - ".ttf"
+
+  strip_query_prefixes:
+    - "utm_"
+
+  strip_query_keys:
+    - "fbclid"
+    - "gclid"
+    - "mc_cid"
+    - "mc_eid"
+
   sort_query: true
+  trailing_slash: preserve
 
 page_types:
-  - name: listing
-    url_regex: '^/tin-tuc/vien-thong-cong-nghe/?$'
-  - name: support_article
-    url_regex: '^/tin-tuc/[^/]+\.html$'
+  - name: fpt_telecom_article
+    allow_follow: true
 
 extract:
   parser: html.parser
+
   title:
-    selectors: ['h1', '.title', 'title']
+    selectors:
+      - "title"
+      - "h1"
+
   content:
-    container_selectors: ['article', 'main', '.detail-content', '.content', 'body']
-    remove_selectors: ['script', 'style', 'noscript', 'nav', 'footer', 'header', 'form']
-  metadata: []
+    container_selectors:
+      - "article"
+      - "main"
+      - "body"
+
+    remove_selectors:
+      - "script"
+      - "style"
+      - "noscript"
+      - "template"
+      - "nav"
+      - "footer"
 
 links:
-  default_follow: false
-  rules:
-    - source_path_regex: '^/tin-tuc/vien-thong-cong-nghe/?$'
-      selector: 'a[href]'
-      target_path_regex: '^/tin-tuc/[^/]+\.html$'
-      anchor_text_allow_regex: '(?i)wifi|wi-fi|internet|mạng|cáp quang|modem|router|camera|kết nối|lắp đặt|gói cước|băng rộng|5g|4g|mesh|access point'
+  default_follow: true
+  default_selector: "a[href]"
 
 preprocess:
-  min_words: 70
-  min_chars: 350
+  min_words: 60
+  min_chars: 500
   min_vietnamese_score: 0.35
   min_relevance_score: 0.20
   min_keyword_hits: 2
+
   relevance_keywords:
-    - wifi
     - internet
+    - wifi
+    - wi-fi
+    - modem
+    - router
+    - cáp quang
     - mạng
-    - cáp quang
-    - modem
-    - router
-    - camera
+    - băng thông
+    - tốc độ mạng
     - kết nối
-    - lắp đặt
-    - gói cước
-    - băng rộng
     - mesh
     - access point
-    - tốc độ mạng
-  required_any_keywords:
-    - wifi
-    - internet
-    - cáp quang
-    - modem
-    - router
-    - camera
-    - gói cước
-    - tốc độ mạng
-    - lắp mạng
-    - mesh
-    - access point
-  reject_any_keywords:
-    - vua kiến tạo
-    - phim cổ trang
-    - eSports
-    - ngoại hạng anh
+    - 2.4ghz
+    - 5ghz
+    - wi-fi 6
+    - wi-fi 7
+    - xgs-pon
+    - fpt telecom
+    - fpt wifi
+    - hi fpt
+    - f-safe
+
   chunk_words: 220
   chunk_overlap_words: 40
   min_chunk_words: 45
+
+  reject_text_regex:
+    - "\\b404\\b"
+    - "not found"
+    - "access denied"
+    - "verify you are human"
+    - "captcha"
+    - "just a moment"
