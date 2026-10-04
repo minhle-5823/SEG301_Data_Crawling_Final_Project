@@ -7,6 +7,15 @@ enabled: true
 seed_urls:
   - https://tuyensinh.hcmus.edu.vn/
   - https://tuyensinh.hcmus.edu.vn/cau-hoi-thuong-gap/
+  - https://tuyensinh.hcmus.edu.vn/thong-tin-tuyen-sinh-cac-nam/
+  - https://tuyensinh.hcmus.edu.vn/chi-tieu/
+  - https://tuyensinh.hcmus.edu.vn/phuong-thuc-tuyen-sinh/
+  - https://tuyensinh.hcmus.edu.vn/diem-chuan-2/
+  - https://tuyensinh.hcmus.edu.vn/hoc-phi/
+  - https://tuyensinh.hcmus.edu.vn/nganh-dao-tao/
+  - https://tuyensinh.hcmus.edu.vn/nganh-moi/
+  - https://tuyensinh.hcmus.edu.vn/hoc-bong/
+  - https://tuyensinh.hcmus.edu.vn/thong-tin-nhap-hoc/
 
 allowed_domains:
   - tuyensinh.hcmus.edu.vn
@@ -44,10 +53,12 @@ url:
   allow_path_regex:
     - '^/$'
     - '^/cau-hoi-thuong-gap/?$'
-    - '^/(?:phuong-thuc-tuyen-sinh|hoc-phi|diem-chuan|chi-tieu|nganh-dao-tao|nganh-moi|thong-tin-nhap-hoc|hoc-bong)(?:/|$)'
-    - '^/202[4-6]-.*'
+    - '^/(?:thong-tin-tuyen-sinh-cac-nam|chi-tieu|chi-tieu-2|phuong-thuc-tuyen-sinh|diem-chuan-2|hoc-phi|nganh-dao-tao|nganh-moi|hoc-bong|thong-tin-nhap-hoc)/?$'
+    - '^/202[4-6]-[^/]+/?$'
+    - '^/(?:nganh|nhom-nganh)-[^/]+/?$'
+    - '^/danh-muc/thong-tin-tuyen-sinh/(?:thong-tin-tuyen-sinh-nam-202[4-6]|thong-tin-tuyen-sinh-cac-nam-truoc)/?$'
   deny_path_regex:
-    - '^/(?:wp-admin|wp-login|feed)(?:/|$)'
+    - '^/(?:wp-admin|wp-login|wp-content|wp-json|feed|xmlrpc\.php)(?:/|$)'
   strip_query_prefixes: [utm_]
   strip_query_keys: [ref]
   sort_query: true
@@ -57,13 +68,29 @@ page_types:
     url_regex: '^/$'
   - name: faq
     url_regex: '^/cau-hoi-thuong-gap/?$'
+  - name: admissions_overview
+    url_regex: '^/thong-tin-tuyen-sinh-cac-nam/?$'
+  - name: quota
+    url_regex: '^/chi-tieu(?:-2)?/?$'
+  - name: admission_methods
+    url_regex: '^/phuong-thuc-tuyen-sinh/?$'
+  - name: cutoff_scores
+    url_regex: '^/diem-chuan-2/?$'
+  - name: tuition
+    url_regex: '^/hoc-phi/?$'
+  - name: programs
+    url_regex: '^/(?:nganh-dao-tao|nganh-moi|nganh-[^/]+|nhom-nganh-[^/]+)/?$'
+  - name: scholarship
+    url_regex: '^/hoc-bong/?$'
+  - name: enrollment
+    url_regex: '^/thong-tin-nhap-hoc/?$'
   - name: education_article
     url_regex: '^/.+'
 
 extract:
   parser: html.parser
   title:
-    selectors: ['h1', 'title']
+    selectors: ['.entry-title', '#content > div > h1', 'title']
   content:
     container_selectors: ['main', 'article', '.entry-content', '.site-main', 'body']
     remove_selectors: ['script', 'style', 'noscript', 'nav', 'footer', 'header', 'form']
