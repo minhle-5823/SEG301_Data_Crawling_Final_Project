@@ -7,15 +7,6 @@ enabled: true
 seed_urls:
   - https://tuyensinh.hcmus.edu.vn/
   - https://tuyensinh.hcmus.edu.vn/cau-hoi-thuong-gap/
-  - https://tuyensinh.hcmus.edu.vn/thong-tin-tuyen-sinh-cac-nam/
-  - https://tuyensinh.hcmus.edu.vn/chi-tieu/
-  - https://tuyensinh.hcmus.edu.vn/phuong-thuc-tuyen-sinh/
-  - https://tuyensinh.hcmus.edu.vn/diem-chuan-2/
-  - https://tuyensinh.hcmus.edu.vn/hoc-phi/
-  - https://tuyensinh.hcmus.edu.vn/nganh-dao-tao/
-  - https://tuyensinh.hcmus.edu.vn/nganh-moi/
-  - https://tuyensinh.hcmus.edu.vn/hoc-bong/
-  - https://tuyensinh.hcmus.edu.vn/thong-tin-nhap-hoc/
 
 allowed_domains:
   - tuyensinh.hcmus.edu.vn
@@ -52,11 +43,10 @@ url:
   trailing_slash: preserve
   allow_path_regex:
     - '^/$'
-    - '^/cau-hoi-thuong-gap/?$'
-    - '^/(?:thong-tin-tuyen-sinh-cac-nam|chi-tieu|chi-tieu-2|phuong-thuc-tuyen-sinh|diem-chuan-2|hoc-phi|nganh-dao-tao|nganh-moi|hoc-bong|thong-tin-nhap-hoc)/?$'
+    - '^/cau-hoi-thuong-gap(?:/|$)'
+    - '^/danh-muc/thong-tin-tuyen-sinh(?:/|$)'
     - '^/202[4-6]-[^/]+/?$'
-    - '^/(?:nganh|nhom-nganh)-[^/]+/?$'
-    - '^/danh-muc/thong-tin-tuyen-sinh/(?:thong-tin-tuyen-sinh-nam-202[4-6]|thong-tin-tuyen-sinh-cac-nam-truoc)/?$'
+    - '^/(?:chi-tieu|phuong-thuc-tuyen-sinh|diem-chuan-2|hoc-phi|hoc-bong|thong-tin-nhap-hoc|nganh-[^/]+|nhom-nganh-[^/]+)/?$'
   deny_path_regex:
     - '^/(?:wp-admin|wp-login|wp-content|wp-json|feed|xmlrpc\.php)(?:/|$)'
   strip_query_prefixes: [utm_]
