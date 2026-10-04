@@ -24,9 +24,8 @@ extract:
   parser: html.parser
   title: {selectors: ['h1','h2','title']}
   content:
-    container_selectors: ['main','.site-main','.content','body']
-    remove_selectors: ['script','style','noscript','nav','footer','header','form']
-  metadata: []
+      container_selectors: ['#posts-results','main','.site-main','.content','body']
+      remove_selectors: ['script','style','noscript','nav','footer','header','form','.faq-tags','.faq-copy-button','.mt-down-cate','.pagination']
 links:
   default_follow: true
   default_selector: 'a[href]'
